@@ -68,8 +68,8 @@ public class PlayerController : MonoBehaviour
     void Move()
     {
         if (rho != GameController.controller.SphereSize) rho = GameController.controller.SphereSize;
-        theta -= Input.GetAxis("Vertical") * (speed);
-        phi -= Input.GetAxis("Horizontal") * (speed);
+        theta -= Input.GetAxis("Vertical") * (speed/2);
+        phi -= Input.GetAxis("Horizontal") * (speed/2);
 
         position.x = rho * Mathf.Sin(phi) * Mathf.Cos(theta);
         position.y = rho * Mathf.Sin(phi) * Mathf.Sin(theta);

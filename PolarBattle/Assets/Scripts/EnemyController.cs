@@ -45,7 +45,7 @@ public class EnemyController : MonoBehaviour
             float step = Time.time / 1000f;
             Vector3 startingPosition = transform.position;
             if (transform.position == nextPosition) ;
-            else nextPosition = Move(Random.Range(-moveRange, moveRange), Random.Range(-moveRange, moveRange));
+            else nextPosition = Move(Random.Range(0, moveRange), Random.Range(0, moveRange));
             transform.position = Vector3.Slerp(transform.position, nextPosition, step);
         }
 
