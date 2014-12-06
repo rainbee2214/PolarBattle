@@ -65,15 +65,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Fire")) Fire();
     }
 
-    void Fire()
-    {
-        Debug.Log("Firing weapon!");
-        bullets[currentBullet].transform.position = transform.position;
-        bullets[currentBullet].SetActive(true);
-        bullets[currentBullet].transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
-        bullets[currentBullet].rigidbody.AddForce(Vector3.zero); // Not really working at all
-        currentBullet++; if (currentBullet >= bullets.Count) currentBullet = 0;
-    }
     void Move()
     {
         if (rho != GameController.controller.SphereSize) rho = GameController.controller.SphereSize;
@@ -85,6 +76,14 @@ public class PlayerController : MonoBehaviour
         position.z = rho * Mathf.Cos(phi);
 
         transform.position = position;
+    }
+    void Fire()
+    {
+        bullets[currentBullet].transform.position = transform.position;
+        bullets[currentBullet].SetActive(true);
+        bullets[currentBullet].transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+        bullets[currentBullet].rigidbody.AddForce(Vector3.zero); // Not really working at all
+        currentBullet++; if (currentBullet >= bullets.Count) currentBullet = 0;
     }
 
     void MakeBullets()
