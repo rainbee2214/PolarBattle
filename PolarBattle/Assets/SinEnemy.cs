@@ -1,27 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyController : MonoBehaviour 
+public class SinEnemy : MonoBehaviour 
 {
-    #region Properties
-    private int health;
-    public int Health
-    {
-        get { return health; }
-        set { health += value; }
-    }
-    #endregion
-
     public float rho;
     public float phi;
     public float theta;
+    public float piStep;
 
     Vector3 origin = Vector3.zero;
     Vector3 position;
     Vector3 nextPosition;
-
-
-    public float speed = 0.1f;
+    
+    public float speed = 0.00001f;
 
     float nextMoveTime;
     float moveRange = 3f;
@@ -45,23 +36,24 @@ public class EnemyController : MonoBehaviour
         {
             float step = Time.time / 1000f;
             Vector3 startingPosition = transform.position;
-            if (transform.position == nextPosition) ;
-            else nextPosition = Move(Random.Range(0, moveRange), Random.Range(0, moveRange));
+            if (transform.position == nextPosition) Debug.Log("Arrived at next position.");
+            else nextPosition = Move();
             transform.position = Vector3.Slerp(transform.position, nextPosition, step);
         }
 
     }
 
-    Vector3 Move(float hMoveAmount, float vMoveAmount)
+    Vector3 Move()
     {
         if (rho != GameController.controller.SphereSize) rho = GameController.controller.SphereSize;
-        theta -= hMoveAmount * (speed);
-        phi -= vMoveAmount * (speed);
+        theta -= piStep * (speed);
+        phi -= piStep/4f * (speed);
 
         position.x = rho * Mathf.Sin(phi) * Mathf.Cos(theta);
         position.y = rho * Mathf.Sin(phi) * Mathf.Sin(theta);
         position.z = rho * Mathf.Cos(phi);
 
+        piStep += 0.0001f;
         return position;
     }
 }
