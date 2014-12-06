@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour 
 {
@@ -37,6 +38,9 @@ public class PlayerController : MonoBehaviour
 
     public float speed = 1;
 
+    List<GameObject> bullets;
+    int currentBullet;
+
     void Start () 
 	{
         target = GameController.controller.gameObject;
@@ -47,14 +51,29 @@ public class PlayerController : MonoBehaviour
         //Convert theta and phi to radians
         theta = theta * (Mathf.PI / 180);
         phi = phi * (Mathf.PI / 180);
+        MakeBullets();
 	}
 
-	void Update () 
-	{
+    void Update()
+    {
         transform.LookAt(target.transform.position);
-        if (Mathf.Abs(Input.GetAxis("Vertical")) > 0 || Mathf.Abs(Input.GetAxis("Horizontal")) > 0) Move();
-	}
+    }
 
+	void FixedUpdate () 
+	{
+        if (Mathf.Abs(Input.GetAxis("Vertical")) > 0 || Mathf.Abs(Input.GetAxis("Horizontal")) > 0) Move();
+        if (Input.GetButtonDown("Fire")) Fire();
+    }
+
+    void Fire()
+    {
+        Debug.Log("Firing weapon!");
+        bullets[currentBullet].transform.position = transform.position;
+        bullets[currentBullet].SetActive(true);
+        bullets[currentBullet].transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+        bullets[currentBullet].rigidbody.AddForce(Vector3.zero); // Not really working at all
+        currentBullet++; if (currentBullet >= bullets.Count) currentBullet = 0;
+    }
     void Move()
     {
         if (rho != GameController.controller.SphereSize) rho = GameController.controller.SphereSize;
@@ -66,6 +85,15 @@ public class PlayerController : MonoBehaviour
         position.z = rho * Mathf.Cos(phi);
 
         transform.position = position;
+    }
 
+    void MakeBullets()
+    {
+        bullets = new List<GameObject>();
+        for (int i = 0; i < 10; i++)
+        {
+            bullets.Add(Instantiate(Resources.Load("Bullet", typeof(GameObject))) as GameObject);
+            bullets[i].gameObject.SetActive(false);
+        }
     }
 }
