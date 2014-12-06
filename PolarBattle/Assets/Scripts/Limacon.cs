@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SinEnemy : MonoBehaviour 
+public class Limacon : MonoBehaviour 
 {
     public float rho;
     public float phi;
@@ -13,9 +13,6 @@ public class SinEnemy : MonoBehaviour
     Vector3 nextPosition;
     
     public float speed = 0.00001f;
-
-    float nextMoveTime;
-    float moveRange = 3f;
 
     public bool move;
     void Start()

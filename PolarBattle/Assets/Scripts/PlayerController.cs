@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
         //Convert theta and phi to radians
         theta = theta * (Mathf.PI / 180);
         phi = phi * (Mathf.PI / 180);
-        MakeBullets();
+        //MakeBullets();
 	}
 
     void Update()
@@ -62,14 +62,14 @@ public class PlayerController : MonoBehaviour
 	void FixedUpdate () 
 	{
         if (Mathf.Abs(Input.GetAxis("Vertical")) > 0 || Mathf.Abs(Input.GetAxis("Horizontal")) > 0) Move();
-        if (Input.GetButtonDown("Fire")) Fire();
+        //if (Input.GetButtonDown("Fire")) Fire();
     }
 
     void Move()
     {
         if (rho != GameController.controller.SphereSize) rho = GameController.controller.SphereSize;
-        theta -= Input.GetAxis("Vertical") * (speed/2);
-        phi -= Input.GetAxis("Horizontal") * (speed/2);
+        phi += Input.GetAxis("Vertical") * (speed/6);
+        theta -= Input.GetAxis("Horizontal") * (speed/8);
 
         position.x = rho * Mathf.Sin(phi) * Mathf.Cos(theta);
         position.y = rho * Mathf.Sin(phi) * Mathf.Sin(theta);
